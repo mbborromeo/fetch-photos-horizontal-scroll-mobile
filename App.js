@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import PhotosList from './PhotosList';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Michael, open up App.js to start working on your app!</Text>
+      <PhotosList />
     </View>
   );
 }
