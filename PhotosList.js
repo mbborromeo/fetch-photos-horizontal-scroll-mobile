@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react'; //
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 // import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
@@ -25,14 +25,19 @@ function PhotosList( props ) {
 
   return (
     <View>
-      { loading ?
+      { loading && photos ?
         <Text>
           loading photos...      
         </Text> :
-        <Text>
-          Horizontal scrollable photos...
-          { photos[0].title }
-        </Text>
+        <ScrollView>
+          { photos.map( photo => 
+              <View key={photo.id}>
+                <Text>Title: {photo.title}</Text>
+                <Image source={{ uri: photo.url }} style={{width: 80, height: 80}}  />
+              </View>
+            )
+          }
+        </ScrollView>
       }
     </View>
   );
