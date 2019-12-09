@@ -36,10 +36,14 @@ function PhotosList( props ) {
                   renderItem={ ({item}) => 
                     <View>
                       <Text>Title: {item.title}</Text>
-                      <Image source={{ uri: item.url }} style={{width: 80, height: 80}}  />
+                      <Image 
+                        source={{ uri: item.url }} 
+                        style={{ width: "100%", height: "auto", resizeMode: 'contain', aspectRatio: 1 }} 
+                      />
                     </View>
                   }
-                  keyExtractor={ (item, index) => index.toString() }
+                  keyExtractor={ (item) => item.id.toString() }
+                  // horizontal={ true }
                 />        
             }
         </View>
