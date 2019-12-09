@@ -1,16 +1,12 @@
 
 import React from 'react';
 
-class PhotosService() {
-  constructor() {
-    
-  }
+class PhotosService {
 
   getPhotos() {
-    return fetch('https://jsonplaceholder.typicode.com/photos')
-      .then( response => response.json() )
-        .then( json => console.log(json) );
+    return fetch('https://jsonplaceholder.typicode.com/photos');        
   }
+
 }
 
 export default PhotosService;

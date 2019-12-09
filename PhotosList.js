@@ -1,31 +1,29 @@
 import React, { useState , useEffect } from 'react'; //
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-// import PhotosService from './PhotosService';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
+import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
   //State variables
-  const [ loading, setLoading ] = useState( true ); // false
-  const [ photos, setPhotos ] = useState( [] );
+  const [ photos, setPhotos ] = useState( undefined );
+  console.log("photos - ", photos);
+
+  const photosService = new PhotosService();
 
   useEffect(
-    () => {
-        // setLoading( true );
-       
-        fetch('https://jsonplaceholder.typicode.com/photos')
+    () => {       
+        photosService.getPhotos()
           .then( response => response.json() )
-            .then( json => {
-              console.log( json );
-              setPhotos( json );
-              setLoading( false );
-            })
-      
+            .then( responseJson => setPhotos(responseJson) )
+              .catch( (error) => {
+                console.error(error);
+              });      
     },
     [ ]
   );
 
   return (
     <View>
-      { loading && photos ?
+      { photos===undefined ?
         <Text>
           loading photos...      
         </Text> :
@@ -38,6 +36,8 @@ function PhotosList( props ) {
             )
           }
         </ScrollView>
+        
+        
       }
     </View>
   );
