@@ -30,18 +30,17 @@ function PhotosList( props ) {
             { photos===undefined ?
                 <Text>
                     loading photos...      
-                </Text> :
-                <ScrollView>
-                    { photos.map( photo => 
-                        <View key={photo.id}>
-                            <Text>Title: {photo.title}</Text>
-                            <Image source={{ uri: photo.url }} style={{width: 80, height: 80}}  />
-                        </View>
-                    )
-                    }
-                </ScrollView>
-        
-        
+                </Text> :                
+                <FlatList
+                  data={ photos }
+                  renderItem={ ({item}) => 
+                    <View>
+                      <Text>Title: {item.title}</Text>
+                      <Image source={{ uri: item.url }} style={{width: 80, height: 80}}  />
+                    </View>
+                  }
+                  keyExtractor={ (item, index) => index.toString() }
+                />        
             }
         </View>
     );
