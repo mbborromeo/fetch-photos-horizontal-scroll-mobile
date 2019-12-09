@@ -34,12 +34,12 @@ function PhotosList( props ) {
                 <FlatList
                   data={ photos }
                   renderItem={ ({item}) => 
-                    <View key={item.id}>
+                    <View>
                       <Text>Title: {item.title}</Text>
                       <Image source={{ uri: item.url }} style={{width: 80, height: 80}}  />
                     </View>
                   }
-                  // keyExtractor={ (photo, index) => index }
+                  keyExtractor={ (item, index) => index.toString() }
                 />        
             }
         </View>
