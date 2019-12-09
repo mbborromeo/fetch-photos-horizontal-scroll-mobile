@@ -25,8 +25,43 @@ function PhotosList( props ) {
         [photosService]
     );
 
+    const styles = StyleSheet.create({
+      viewLayout: {
+        // flex: 1,
+        // flexDirection: 'row',
+      },
+
+      imageContainer: {
+        width: 375,
+        height: 600, // 667
+        borderColor: 'red',
+        borderWidth: 1,
+        //flex: 1,
+      },
+
+      text: {
+        width: 300,
+      },
+
+      image: {
+        width: 'auto', 
+        height: '100%', 
+        resizeMode: 'contain',
+        // aspectRatio: 1
+        //flex: 1,
+        borderRadius: 16,
+        borderColor: 'green',
+        borderWidth: 1,
+        // blurRadius: 10, 
+        shadowColor: 'black',
+        shadowOffset: { width:3, height:3 },
+        shadowOpacity: 1,
+        shadowRadius: 6
+      }
+    });
+
     return (
-        <View>
+        <View style={ styles.viewLayout }>
             { photos===undefined ?
                 <Text>
                     loading photos...      
@@ -34,16 +69,17 @@ function PhotosList( props ) {
                 <FlatList
                   data={ photos }
                   renderItem={ ({item}) => 
-                    <View>
-                      <Text>Title: {item.title}</Text>
+                    <View style={ styles.imageContainer }>
+                      <Text style={ styles.text }>{ item.title }</Text>
                       <Image 
-                        source={{ uri: item.url }} 
-                        style={{ width: "100%", height: "auto", resizeMode: 'contain', aspectRatio: 1 }} 
+                        style={ styles.image }
+                        source={{ uri: item.url }}                             
                       />
                     </View>
                   }
                   keyExtractor={ (item) => item.id.toString() }
-                  // horizontal={ true }
+                  horizontal={ true }
+                  // pagingEnabled={ true }
                 />        
             }
         </View>
