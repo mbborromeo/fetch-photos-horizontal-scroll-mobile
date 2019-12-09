@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react'; //
+import React, { useState , useEffect, useMemo } from 'react'; //
 import { StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
 import PhotosService from './PhotosService';
 
