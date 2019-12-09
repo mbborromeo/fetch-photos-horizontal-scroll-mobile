@@ -33,17 +33,39 @@ function PhotosList( props ) {
       },
 
       imageContainer: {
-        width: 375,
-        height: 600, // 667
+        // width: 375,
+        // height: 600, // 667
         borderColor: 'red',
         borderWidth: 1,
         flex: 1,
         flexDirection: 'row',
-        // justifyContent: 'space-around', // main-axis
-        // alignItems: 'center', // cross-axis
+        justifyContent: 'space-around', // main-axis
+        alignItems: 'center', // cross-axis
+      },
+      
+      imageBackground: { // positioned absolute by default, so ignores border properties
+        width: '100%', 
+        height: 'auto', 
+        resizeMode: 'contain',
+        aspectRatio: 1,
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+        shadowColor: 'black',
+        shadowOffset: { width:0, height:3 },
+        shadowOpacity: 1,
+        shadowRadius: 2,        
       },
 
-      titleStyle: {
+      innerImage: {
+        borderRadius: 16, 
+        borderColor: 'green', 
+        borderWidth: 1,
+      },
+
+      title: {
         width: 375,
         height: 70,
         borderColor: 'blue',
@@ -55,25 +77,10 @@ function PhotosList( props ) {
         // flexDirection: 'row',
         // alignItems: 'center',
         position: 'relative',
-        top: '50%',
+        //top: 0, //'50%'
         transform: [{ rotate: '-45deg' }],
-      },
-
-      imageStyle: {
-        // width: 'auto', 
-        // height: '100%', 
-        // resizeMode: 'contain',
-        // aspectRatio: 1
-        //flex: 1,
-        borderRadius: 16,
-        borderColor: 'green',
-        borderWidth: 1,
-        // blurRadius: 10, 
-        shadowColor: 'black',
-        shadowOffset: { width:3, height:3 },
-        shadowOpacity: 1,
-        shadowRadius: 6
       }
+
     });
 
     return (
@@ -86,11 +93,12 @@ function PhotosList( props ) {
                   data={ photos }
                   renderItem={ ({item}) => 
                     <View style={ styles.imageContainer }>                      
-                      <ImageBackground  
-                        style={ styles.imageStyle }
-                        source={{ uri: item.url }}   
+                      <ImageBackground                          
+                        source={{ uri: item.url }}  
+                        style={ styles.imageBackground } 
+                        imageStyle={ styles.innerImage }
                       >
-                        <Text style={ styles.titleStyle }>{ item.title }</Text>
+                        <Text style={ styles.title }>{ item.title }</Text>
                       </ImageBackground>
                     </View>
                   }
