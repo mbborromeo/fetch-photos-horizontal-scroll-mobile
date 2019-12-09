@@ -1,5 +1,5 @@
 import React, { useState , useEffect, useMemo } from 'react'; //
-import { StyleSheet, Text, View, ImageBackground, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator } from 'react-native';
 import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
@@ -25,9 +25,20 @@ function PhotosList( props ) {
     );
 
     const styles = StyleSheet.create({
+      header: {
+        fontWeight: 'bold', 
+        height: 36, 
+        lineHeight: 36, 
+        textAlign: 'center', 
+        borderWidth: 1, 
+        borderColor: 'pink',
+      },
+
       viewLayout: {
         // flex: 1,
         // flexDirection: 'row',
+
+        //justifyContent: 'center'
       },
 
       imageContainer: {
@@ -77,6 +88,10 @@ function PhotosList( props ) {
         //position: 'relative',
         //top: 0, //'50%'
         transform: [{ rotate: '-45deg' }],        
+      },
+
+      button: {
+        backgroundColor: '#000033',
       }
 
     });
@@ -84,26 +99,37 @@ function PhotosList( props ) {
     return (
         <View style={ styles.viewLayout }>
             { photos===undefined ?
-                <Text>
-                    loading photos...      
-                </Text> :                
-                <FlatList
-                  data={ photos }
-                  renderItem={ ({item}) => 
-                    <View style={ styles.imageContainer }>                      
-                      <ImageBackground                          
-                        source={{ uri: item.url }}  
-                        style={ styles.imageBackground } 
-                        imageStyle={ styles.innerImage }
-                      >
-                        <Text style={ styles.title }>{ item.title }</Text>
-                      </ImageBackground>
-                    </View>
-                  }
-                  keyExtractor={ (item) => item.id.toString() }
-                  horizontal={ true }
-                  // pagingEnabled={ true }
-                />        
+                <View>
+                    <ActivityIndicator size="large" color="#0000ff" />  
+                </View> :    
+                <View>
+                    <Text style={ styles.header }>
+                        Photos from Typicode API call
+                    </Text>               
+
+                    <FlatList
+                      data={ photos }
+                      renderItem={ ({item}) => 
+                        <View style={ styles.imageContainer }>                      
+                          <ImageBackground                          
+                            source={{ uri: item.url }}  
+                            style={ styles.imageBackground } 
+                            imageStyle={ styles.innerImage }
+                          >
+                            <Text style={ styles.title }>{ item.title }</Text>
+                          </ImageBackground>
+                        </View>
+                      }
+                      keyExtractor={ (item) => item.id.toString() }
+                      horizontal={ true }
+                      // pagingEnabled={ true }
+                    />        
+                    
+                    <Button
+                        title="Re-order photos"
+                        onPress={() => Alert.alert('Button pressed')}
+                    />                   
+                </View>
             }
         </View>
     );
