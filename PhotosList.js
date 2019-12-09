@@ -1,12 +1,10 @@
 import React, { useState , useEffect, useMemo } from 'react'; //
-import { StyleSheet, Text, View, ScrollView, Image, ImageBackground, FlatList } from 'react-native';
-// import FullWidthImage from 'react-native-fullwidth-image';
+import { StyleSheet, Text, View, ImageBackground, FlatList } from 'react-native';
 import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
-    console.log("photos - ", photos);
 
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
     const photosService = useMemo(
