@@ -74,9 +74,9 @@ function PhotosList( props ) {
         // flex: 1,
         // flexDirection: 'row',
         // alignItems: 'center',
-        position: 'relative',
+        //position: 'relative',
         //top: 0, //'50%'
-        transform: [{ rotate: '-45deg' }],
+        transform: [{ rotate: '-45deg' }],        
       }
 
     });
