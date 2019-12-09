@@ -1,5 +1,6 @@
 import React, { useState , useEffect, useMemo } from 'react'; //
-import { StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, ImageBackground, FlatList } from 'react-native';
+// import FullWidthImage from 'react-native-fullwidth-image';
 import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
@@ -36,17 +37,32 @@ function PhotosList( props ) {
         height: 600, // 667
         borderColor: 'red',
         borderWidth: 1,
-        //flex: 1,
+        flex: 1,
+        flexDirection: 'row',
+        // justifyContent: 'space-around', // main-axis
+        // alignItems: 'center', // cross-axis
       },
 
-      text: {
-        width: 300,
+      titleStyle: {
+        width: 375,
+        height: 70,
+        borderColor: 'blue',
+        borderWidth: 1,
+        //whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        //textOverflow: 'ellipsis',
+        // flex: 1,
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        position: 'relative',
+        top: '50%',
+        transform: [{ rotate: '-45deg' }],
       },
 
-      image: {
-        width: 'auto', 
-        height: '100%', 
-        resizeMode: 'contain',
+      imageStyle: {
+        // width: 'auto', 
+        // height: '100%', 
+        // resizeMode: 'contain',
         // aspectRatio: 1
         //flex: 1,
         borderRadius: 16,
@@ -69,12 +85,13 @@ function PhotosList( props ) {
                 <FlatList
                   data={ photos }
                   renderItem={ ({item}) => 
-                    <View style={ styles.imageContainer }>
-                      <Text style={ styles.text }>{ item.title }</Text>
-                      <Image 
-                        style={ styles.image }
-                        source={{ uri: item.url }}                             
-                      />
+                    <View style={ styles.imageContainer }>                      
+                      <ImageBackground  
+                        style={ styles.imageStyle }
+                        source={{ uri: item.url }}   
+                      >
+                        <Text style={ styles.titleStyle }>{ item.title }</Text>
+                      </ImageBackground>
                     </View>
                   }
                   keyExtractor={ (item) => item.id.toString() }
