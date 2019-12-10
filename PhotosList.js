@@ -4,9 +4,9 @@ import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
     //State variables
-    const [ originalPhotos, setOriginalPhotos ] = useState( undefined );
+    const [ photos, setPhotos ] = useState( undefined );
     const {width} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
-    console.log("originalPhotos", originalPhotos);
+    console.log("photos", photos);
 
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
     const photosService = useMemo(
@@ -19,7 +19,7 @@ function PhotosList( props ) {
             photosService.getPhotos()
                 .then( response => response.json() )
                 .then( responseJson => {
-                    setOriginalPhotos(responseJson);
+                    setPhotos(responseJson);
                 })
                 .catch( (error) => {
                     console.error(error);
@@ -116,10 +116,10 @@ function PhotosList( props ) {
 
     const onPressHandler = useCallback(
         () => {
-            const temp = shuffle( originalPhotos );
-            setOriginalPhotos( temp );        
+            const temp = shuffle( photos );
+            setPhotos( temp );        
         },
-        [originalPhotos]
+        [photos]
     );
 
     const keyExtractorHandler = useCallback(
@@ -153,7 +153,7 @@ function PhotosList( props ) {
 
     return (
         <View style={ styles.viewLayout }>
-            { originalPhotos===undefined ?
+            { photos===undefined ?
                 <View>
                     <ActivityIndicator size="large" color="#0000ff" />  
                 </View> :    
@@ -163,7 +163,7 @@ function PhotosList( props ) {
                     </Text>               
 
                     <FlatList
-                        data={ originalPhotos }
+                        data={ photos }
                         renderItem={ renderItemHandler }
                         keyExtractor={ keyExtractorHandler }
                         horizontal={ true }
