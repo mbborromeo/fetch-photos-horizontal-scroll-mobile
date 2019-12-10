@@ -112,9 +112,13 @@ function PhotosList( props ) {
                       renderItem={ ({item}) => 
                         <View style={ styles.imageContainer }>                      
                           <ImageBackground                          
-                            source={{ uri: item.url }}  
+                            source={{ 
+                              uri: item.url,
+                              cache: 'force-cache',
+                            }}  
                             style={ styles.imageBackground } 
                             imageStyle={ styles.innerImage }
+                            // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
                           >
                             <Text style={ styles.title }>{ item.title }</Text>
                           </ImageBackground>
