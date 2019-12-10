@@ -1,4 +1,4 @@
-import React, { useState , useEffect, useMemo } from 'react'; //
+import React, { useState , useEffect, useMemo, useCallback } from 'react'; //
 import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import PhotosService from './PhotosService';
 
@@ -32,7 +32,19 @@ function PhotosList( props ) {
     );
 
     // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
-    
+    const shuffle = useCallback(
+        (array) => {
+            console.log("Fisher-Yates shuffle array...");
+            for (let i = array.length - 1; i > 0; i--) {
+                console.log("i", i);
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        },
+        []   
+    )
+    /*
     const shuffle = (array) => {
         console.log("Fisher-Yates shuffle array...");
         for (let i = array.length - 1; i > 0; i--) {
@@ -41,13 +53,15 @@ function PhotosList( props ) {
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
-    }    
+    }
+    */
     /*
     function shuffle(array) {
-      console.log("simple shuffle array...");
-      array.sort( () => Math.random() - 0.5 );
-      return array;
-    }
+        for (let i = array.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
     */
 
     const styles = StyleSheet.create({
