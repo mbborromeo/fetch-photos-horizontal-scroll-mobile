@@ -1,11 +1,12 @@
 import React, { useState , useEffect, useMemo } from 'react'; //
-import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
-
+    let {width, height} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
+    
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
     const photosService = useMemo(
         () => new PhotosService(), 
@@ -31,21 +32,21 @@ function PhotosList( props ) {
         lineHeight: 36, 
         textAlign: 'center', 
         borderWidth: 1, 
-        borderColor: 'pink',
+        borderColor: 'black',
       },
 
       viewLayout: {
         // flex: 1,
         // flexDirection: 'row',
-
-        //justifyContent: 'center'
+        // justifyContent: 'center'
       },
 
       imageContainer: {
-        // width: 375,
+        width: width, // 375, don't want to hardcode this
+        height: 'auto',
         // height: 600, // 667
-        borderColor: 'red',
-        borderWidth: 1,
+        // borderColor: 'red',
+        // borderWidth: 1,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around', // main-axis
@@ -56,11 +57,16 @@ function PhotosList( props ) {
         width: '100%', 
         height: 'auto', 
         resizeMode: 'contain',
-        aspectRatio: 1,
+        aspectRatio: 1,        
 
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        //alignItems: 'center',
+
+        // // https://medium.com/the-react-native-log/tips-for-react-native-images-or-saying-goodbye-to-trial-and-error-b2baaf0a1a4d
+        // alignSelf: 'stretch',
+        // width: undefined,
+        // height: undefined,
         
         shadowColor: 'black',
         shadowOffset: { width:0, height:3 },
@@ -70,24 +76,45 @@ function PhotosList( props ) {
 
       innerImage: {
         borderRadius: 16, 
-        borderColor: 'green', 
+        borderColor: 'black', 
         borderWidth: 1,
       },
 
+      titleWrapper: {
+        //borderColor: 'yellow',
+        //borderWidth: 1,
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+
+        //height: 70,
+      },
+
       title: {
-        width: 375,
-        height: 70,
-        borderColor: 'blue',
+        // width: 375,
+        fontSize: 24,
+        //textTransform: 'capitalize',
+        //lineHeight: 16,
+        // flex: 1,        
+
+        color: 'black',
+        backgroundColor: 'white',
+        opacity: 0.7,
+        padding: 16,
+        borderColor: 'grey',
         borderWidth: 1,
         //whiteSpace: 'nowrap',
-        overflow: 'hidden',
+        //overflow: 'hidden',
         //textOverflow: 'ellipsis',
         // flex: 1,
         // flexDirection: 'row',
         // alignItems: 'center',
         //position: 'relative',
         //top: 0, //'50%'
-        transform: [{ rotate: '-45deg' }],        
+        transform: [{ rotate: '-45deg' }],
+        textAlign: 'left',
+        //textAlignVertical: 'center',
       },
 
       button: {
@@ -118,20 +145,26 @@ function PhotosList( props ) {
                             }}  
                             style={ styles.imageBackground } 
                             imageStyle={ styles.innerImage }
+                            resizeMode={ 'contain' } 
                             // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
                           >
-                            <Text style={ styles.title }>{ item.title }</Text>
+                            <View style={ styles.titleWrapper }>
+                              <Text style={ styles.title }>{ item.title }</Text>
+                            </View>
                           </ImageBackground>
                         </View>
                       }
                       keyExtractor={ (item) => item.id.toString() }
                       horizontal={ true }
                       // pagingEnabled={ true }
+                      initialNumToRender={ 5 }
                     />        
                     
                     <Button
                         title="Re-order photos"
-                        onPress={() => Alert.alert('Button pressed')}
+                        onPress={
+                          () => Alert.alert('Button pressed')
+                        }
                     />                   
                 </View>
             }
