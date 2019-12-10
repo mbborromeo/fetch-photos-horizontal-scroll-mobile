@@ -104,12 +104,13 @@ function PhotosList( props ) {
     // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
     const shuffle = useCallback(
         (array) => {
-            console.log("Fisher-Yates shuffle array...");
+            console.log("START Fisher-Yates shuffle array...");
             for (let i = array.length - 1; i > 0; i--) {
-                console.log("i", i);
+                //console.log("i", i);
                 let j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
+            console.log("END Fisher-Yates shuffle array.");
             return array;
             //setShuffledPhotos( array );
         },
@@ -119,7 +120,6 @@ function PhotosList( props ) {
     const shuffle = (array) => {
         console.log("Fisher-Yates shuffle array...");
         for (let i = array.length - 1; i > 0; i--) {
-            console.log("i", i);
             let j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
