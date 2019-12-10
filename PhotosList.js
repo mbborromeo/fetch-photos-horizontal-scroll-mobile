@@ -31,6 +31,76 @@ function PhotosList( props ) {
         [photosService]
     );
 
+    const styles = StyleSheet.create({
+        header: {
+            fontWeight: 'bold', 
+            height: 36, 
+            lineHeight: 36, 
+            textAlign: 'center', 
+            borderWidth: 1, 
+            borderColor: 'black',
+        },
+
+        viewLayout: {
+            // flex: 1,
+            // flexDirection: 'row',
+            // justifyContent: 'center'
+        },
+
+        imageContainer: {
+            width: width, // 375, don't want to hardcode this
+            height: 'auto',
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-around', // main-axis
+            alignItems: 'center', // cross-axis
+        },
+      
+        imageBackground: { // positioned absolute by default, so ignores border properties
+            width: '100%', 
+            height: 'auto', 
+            resizeMode: 'contain',
+            aspectRatio: 1, 
+            flex: 1,
+            justifyContent: 'center',
+            shadowColor: 'black',
+            shadowOffset: { width:0, height:3 },
+            shadowOpacity: 1,
+            shadowRadius: 2,        
+        },
+
+        innerImage: { // needed to override border properties of imageBackground
+            borderRadius: 16, 
+            borderColor: 'black', 
+            borderWidth: 1,
+        },
+
+        titleWrapper: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+
+        title: {
+            fontSize: 24,
+            color: 'black',
+            backgroundColor: 'white',
+            opacity: 0.7,
+            padding: 16,
+            borderColor: 'grey',
+            borderWidth: 1,
+            transform: [{ rotate: '-45deg' }],
+            textAlign: 'left',
+        },
+
+        /*
+        button: {
+          backgroundColor: '#000033',
+        }
+        */
+    });
+    
     // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
     const shuffle = useCallback(
         (array) => {
@@ -41,6 +111,7 @@ function PhotosList( props ) {
                 [array[i], array[j]] = [array[j], array[i]];
             }
             return array;
+            //setShuffledPhotos( array );
         },
         []   
     )
@@ -63,106 +134,6 @@ function PhotosList( props ) {
         }
       }
     */
-
-    const styles = StyleSheet.create({
-        header: {
-            fontWeight: 'bold', 
-            height: 36, 
-            lineHeight: 36, 
-            textAlign: 'center', 
-            borderWidth: 1, 
-            borderColor: 'black',
-        },
-
-        viewLayout: {
-        // flex: 1,
-        // flexDirection: 'row',
-        // justifyContent: 'center'
-        },
-
-        imageContainer: {
-            width: width, // 375, don't want to hardcode this
-            height: 'auto',
-            // height: 600, // 667
-            // borderColor: 'red',
-            // borderWidth: 1,
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-around', // main-axis
-            alignItems: 'center', // cross-axis
-        },
-      
-        imageBackground: { // positioned absolute by default, so ignores border properties
-            width: '100%', 
-            height: 'auto', 
-            resizeMode: 'contain',
-            aspectRatio: 1,        
-
-            flex: 1,
-            justifyContent: 'center',
-            //alignItems: 'center',
-
-            // // https://medium.com/the-react-native-log/tips-for-react-native-images-or-saying-goodbye-to-trial-and-error-b2baaf0a1a4d
-            // alignSelf: 'stretch',
-            // width: undefined,
-            // height: undefined,
-        
-            shadowColor: 'black',
-            shadowOffset: { width:0, height:3 },
-            shadowOpacity: 1,
-            shadowRadius: 2,        
-        },
-
-        innerImage: {
-            borderRadius: 16, 
-            borderColor: 'black', 
-            borderWidth: 1,
-        },
-
-        titleWrapper: {
-            //borderColor: 'yellow',
-            //borderWidth: 1,
-            marginTop: 'auto',
-            marginBottom: 'auto',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-
-            //height: 70,
-        },
-
-        title: {
-            // width: 375,
-            fontSize: 24,
-            //textTransform: 'capitalize',
-            //lineHeight: 16,
-            // flex: 1,        
-
-            color: 'black',
-            backgroundColor: 'white',
-            opacity: 0.7,
-            padding: 16,
-            borderColor: 'grey',
-            borderWidth: 1,
-            //whiteSpace: 'nowrap',
-            //overflow: 'hidden',
-            //textOverflow: 'ellipsis',
-            // flex: 1,
-            // flexDirection: 'row',
-            // alignItems: 'center',
-            //position: 'relative',
-            //top: 0, //'50%'
-            transform: [{ rotate: '-45deg' }],
-            textAlign: 'left',
-            //textAlignVertical: 'center',
-        },
-
-        /*
-        button: {
-          backgroundColor: '#000033',
-        }
-        */
-
-    });
 
     return (
         <View style={ styles.viewLayout }>
@@ -204,6 +175,7 @@ function PhotosList( props ) {
                     <Button
                         title="Re-order photos"
                         onPress={
+                            //shuffle( originalPhotos )
                             () => {
                                 const temp = shuffle( originalPhotos );
                                 setShuffledPhotos( temp );
