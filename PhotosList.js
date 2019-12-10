@@ -1,14 +1,12 @@
-import React, { useState , useEffect, useMemo, useCallback } from 'react'; //
+import React, { useState , useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
     //State variables
     const [ originalPhotos, setOriginalPhotos ] = useState( undefined );
-    const [ shuffledPhotos, setShuffledPhotos ] = useState( undefined );
-    let {width, height} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
+    const {width} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
     console.log("originalPhotos", originalPhotos);
-    console.log("shuffledPhotos", shuffledPhotos);
 
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
     const photosService = useMemo(
@@ -22,7 +20,6 @@ function PhotosList( props ) {
                 .then( response => response.json() )
                 .then( responseJson => {
                     setOriginalPhotos(responseJson);
-                    setShuffledPhotos(responseJson);
                 })
                 .catch( (error) => {
                     console.error(error);
@@ -101,21 +98,21 @@ function PhotosList( props ) {
         */
     });
     
+    // TO DO: put this in separate utils.js file
     // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
-    const shuffle = useCallback(
-        (array) => {
-            console.log("START Fisher-Yates shuffle array...");
-            for (let i = array.length - 1; i > 0; i--) {
-                //console.log("i", i);
-                let j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            console.log("END Fisher-Yates shuffle array.");
-            return array;
-            //setShuffledPhotos( array );
-        },
-        []   
-    )
+    const shuffle = (array) => {
+        console.log("START Fisher-Yates shuffle array...");
+        let newArray = array;
+
+        for (let i = newArray.length - 1; i > 0; i--) {
+            //console.log("i", i);
+            let j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        console.log("END Fisher-Yates shuffle array.");
+        return newArray;
+        //setShuffledPhotos( array );
+    }
     /*
     const shuffle = (array) => {
         console.log("Fisher-Yates shuffle array...");
@@ -137,7 +134,7 @@ function PhotosList( props ) {
 
     return (
         <View style={ styles.viewLayout }>
-            { shuffledPhotos===undefined ?
+            { originalPhotos===undefined ?
                 <View>
                     <ActivityIndicator size="large" color="#0000ff" />  
                 </View> :    
@@ -147,7 +144,7 @@ function PhotosList( props ) {
                     </Text>               
 
                     <FlatList
-                        data={ shuffledPhotos }
+                        data={ originalPhotos }
                         renderItem={ ({item}) => 
                             <View style={ styles.imageContainer }>                      
                                 <ImageBackground                          
@@ -166,10 +163,11 @@ function PhotosList( props ) {
                                 </ImageBackground>
                             </View>
                         }
+                        key={"mylist" + Math.floor( Math.random()*10 ) }
                         keyExtractor={ (item) => item.id.toString() }
                         horizontal={ true }
                         // pagingEnabled={ true }
-                        initialNumToRender={ 5 }
+                        //initialNumToRender={ 5 }
                     />        
                     
                     <Button
@@ -178,7 +176,7 @@ function PhotosList( props ) {
                             //shuffle( originalPhotos )
                             () => {
                                 const temp = shuffle( originalPhotos );
-                                setShuffledPhotos( temp );
+                                setOriginalPhotos( temp );
                             }
                         }
                     />                   
