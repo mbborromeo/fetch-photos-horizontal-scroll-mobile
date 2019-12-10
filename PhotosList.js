@@ -102,7 +102,8 @@ function PhotosList( props ) {
     // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
     const shuffle = (array) => {
         console.log("START Fisher-Yates shuffle array...");
-        let newArray = array;
+        let newArray = [];
+        newArray = [...array]; // array.slice()
 
         for (let i = newArray.length - 1; i > 0; i--) {
             //console.log("i", i);
@@ -163,11 +164,10 @@ function PhotosList( props ) {
                                 </ImageBackground>
                             </View>
                         }
-                        key={"mylist" + Math.floor( Math.random()*10 ) }
                         keyExtractor={ (item) => item.id.toString() }
                         horizontal={ true }
                         // pagingEnabled={ true }
-                        //initialNumToRender={ 5 }
+                        initialNumToRender={ 5 }
                     />        
                     
                     <Button
