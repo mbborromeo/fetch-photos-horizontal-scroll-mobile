@@ -1,4 +1,4 @@
-import React, { useState , useEffect, useMemo } from 'react';
+import React, { useState , useEffect, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import PhotosService from './PhotosService';
 
@@ -112,26 +112,44 @@ function PhotosList( props ) {
         }
         console.log("END Fisher-Yates shuffle array.");
         return newArray;
-        //setShuffledPhotos( array );
     }
-    /*
-    const shuffle = (array) => {
-        console.log("Fisher-Yates shuffle array...");
-        for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-    */
-    /*
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
-    */
+
+    const onPressHandler = useCallback(
+        () => {
+            const temp = shuffle( originalPhotos );
+            setOriginalPhotos( temp );        
+        },
+        [originalPhotos]
+    );
+
+    const keyExtractorHandler = useCallback(
+        (item) => {
+            item.id.toString();
+        },
+        []
+    );
+
+    const renderItemHandler = useCallback(
+        ({item}) => {            
+            <View style={ styles.imageContainer }>                      
+                <ImageBackground                          
+                    source={{ 
+                        uri: item.url,
+                        cache: 'force-cache',
+                    }}  
+                    style={ styles.imageBackground } 
+                    imageStyle={ styles.innerImage }
+                    resizeMode={ 'contain' } 
+                    // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
+                >
+                    <View style={ styles.titleWrapper }>
+                        <Text style={ styles.title }>{ item.title }</Text>
+                    </View>
+                </ImageBackground>
+            </View>       
+        },
+        []
+    );
 
     return (
         <View style={ styles.viewLayout }>
@@ -146,25 +164,8 @@ function PhotosList( props ) {
 
                     <FlatList
                         data={ originalPhotos }
-                        renderItem={ ({item}) => 
-                            <View style={ styles.imageContainer }>                      
-                                <ImageBackground                          
-                                    source={{ 
-                                        uri: item.url,
-                                        cache: 'force-cache',
-                                    }}  
-                                    style={ styles.imageBackground } 
-                                    imageStyle={ styles.innerImage }
-                                    resizeMode={ 'contain' } 
-                                    // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
-                                >
-                                    <View style={ styles.titleWrapper }>
-                                        <Text style={ styles.title }>{ item.title }</Text>
-                                    </View>
-                                </ImageBackground>
-                            </View>
-                        }
-                        keyExtractor={ (item) => item.id.toString() }
+                        renderItem={ renderItemHandler }
+                        keyExtractor={ keyExtractorHandler }
                         horizontal={ true }
                         // pagingEnabled={ true }
                         initialNumToRender={ 5 }
@@ -172,13 +173,7 @@ function PhotosList( props ) {
                     
                     <Button
                         title="Re-order photos"
-                        onPress={
-                            //shuffle( originalPhotos )
-                            () => {
-                                const temp = shuffle( originalPhotos );
-                                setOriginalPhotos( temp );
-                            }
-                        }
+                        onPress={ onPressHandler }
                     />                   
                 </View>
             }
