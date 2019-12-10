@@ -77,17 +77,21 @@ function PhotosList( props ) {
       title: {
         width: 375,
         height: 70,
+        lineHeight: 70,
+        color: 'white',
         borderColor: 'blue',
         borderWidth: 1,
         //whiteSpace: 'nowrap',
-        overflow: 'hidden',
+        //overflow: 'hidden',
         //textOverflow: 'ellipsis',
         // flex: 1,
         // flexDirection: 'row',
         // alignItems: 'center',
         //position: 'relative',
         //top: 0, //'50%'
-        transform: [{ rotate: '-45deg' }],        
+        transform: [{ rotate: '-45deg' }],
+        textAlign: 'center',
+        textAlignVertical: 'center',
       },
 
       button: {
@@ -127,11 +131,14 @@ function PhotosList( props ) {
                       keyExtractor={ (item) => item.id.toString() }
                       horizontal={ true }
                       // pagingEnabled={ true }
+                      initialNumToRender={ 5 }
                     />        
                     
                     <Button
                         title="Re-order photos"
-                        onPress={() => Alert.alert('Button pressed')}
+                        onPress={
+                          () => Alert.alert('Button pressed')
+                        }
                     />                   
                 </View>
             }
