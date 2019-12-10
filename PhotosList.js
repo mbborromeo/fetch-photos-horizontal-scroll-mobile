@@ -148,7 +148,7 @@ function PhotosList( props ) {
                 </ImageBackground>
             </View>       
         },
-        []
+        [styles.imageBackground, styles.imageContainer, styles.innerImage, styles.title, styles.titleWrapper]
     );
 
     return (
