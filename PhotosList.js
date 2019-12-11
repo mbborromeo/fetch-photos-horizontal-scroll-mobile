@@ -47,7 +47,7 @@ function PhotosList( props ) {
         },
 
         imageContainer: {
-            width: width, // 375, don't want to hardcode this
+            width: width, // dynamically gets window width, so app will work on all iOS phones
             height: 'auto',
             flex: 1,
             flexDirection: 'row',
@@ -111,7 +111,7 @@ function PhotosList( props ) {
 
     const keyExtractorHandler = useCallback(
         (item) => {
-            console.log("keyExtractorHandler"); //, item.id.toString() 
+            console.log("keyExtractorHandler");
             return item.id.toString();            
         },
         []
