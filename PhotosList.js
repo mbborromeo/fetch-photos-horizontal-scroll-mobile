@@ -6,8 +6,7 @@ function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
     const {width} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
-    console.log("photos", photos);
-
+    
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
     const photosService = useMemo(
         () => new PhotosService(), 
@@ -115,14 +114,16 @@ function PhotosList( props ) {
 
     const onPressHandler = useCallback(
         () => {
+            console.log("onPressHandler");
             const temp = shuffle( photos );
             setPhotos( temp );        
         },
-        [] // photos
+        [photos]
     );
 
     const keyExtractorHandler = useCallback(
         (item) => {
+            console.log("keyExtractorHandler item.id", item.id.toString() );
             item.id.toString();
         },
         []
@@ -130,6 +131,7 @@ function PhotosList( props ) {
 
     const renderItemHandler = useCallback(
         ({item}) => {
+            console.log("renderItemHandler");
             return (  
               <View style={ styles.imageContainer }>                      
                   <ImageBackground                          
