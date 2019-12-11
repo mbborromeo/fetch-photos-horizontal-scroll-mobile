@@ -125,8 +125,8 @@ function PhotosList( props ) {
 
     const keyExtractorHandler = useCallback(
         (item) => {
-            console.log("keyExtractorHandler item.id", item.id.toString() );
-            item.id.toString();
+            console.log("keyExtractorHandler"); //, item.id.toString() 
+            return item.id.toString();            
         },
         []
     );
