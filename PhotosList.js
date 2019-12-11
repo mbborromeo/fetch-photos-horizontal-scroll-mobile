@@ -5,6 +5,7 @@ import PhotosService from './PhotosService';
 function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
+    const [ shuffledPhotos, setShuffledPhotos ] = useState( undefined );
     const {width} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
     
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
@@ -19,6 +20,7 @@ function PhotosList( props ) {
                 .then( response => response.json() )
                 .then( responseJson => {
                     setPhotos(responseJson);
+                    setShuffledPhotos(responseJson);
                 })
                 .catch( (error) => {
                     console.error(error);
@@ -116,7 +118,7 @@ function PhotosList( props ) {
         () => {
             console.log("onPressHandler");
             const temp = shuffle( photos );
-            setPhotos( temp );        
+            setShuffledPhotos( temp );        
         },
         [photos]
     );
@@ -134,7 +136,7 @@ function PhotosList( props ) {
             console.log("renderItemHandler");
             return (  
               <View style={ styles.imageContainer }>                      
-                  <ImageBackground                          
+                  <ImageBackground  
                       source={{ 
                           uri: item.url,
                           cache: 'force-cache',
@@ -156,7 +158,7 @@ function PhotosList( props ) {
 
     return (
         <View style={ styles.viewLayout }>
-            { photos===undefined ?
+            { shuffledPhotos===undefined ?
                 <View>
                     <ActivityIndicator size="large" color="#0000ff" />  
                 </View> :    
@@ -166,7 +168,7 @@ function PhotosList( props ) {
                     </Text>               
 
                     <FlatList
-                        data={ photos }
+                        data={ shuffledPhotos }
                         renderItem={ renderItemHandler }
                         keyExtractor={ keyExtractorHandler }
                         horizontal={ true }
