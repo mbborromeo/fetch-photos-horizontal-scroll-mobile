@@ -102,8 +102,7 @@ function PhotosList( props ) {
     // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
     const shuffle = (array) => {
         console.log("START Fisher-Yates shuffle array...");
-        let newArray = [];
-        newArray = [...array]; // array.slice()
+        let newArray = [...array]; // array.slice()
 
         for (let i = newArray.length - 1; i > 0; i--) {
             //console.log("i", i);
@@ -119,7 +118,7 @@ function PhotosList( props ) {
             const temp = shuffle( photos );
             setPhotos( temp );        
         },
-        [photos]
+        [] // photos
     );
 
     const keyExtractorHandler = useCallback(
@@ -130,23 +129,25 @@ function PhotosList( props ) {
     );
 
     const renderItemHandler = useCallback(
-        ({item}) => {            
-            <View style={ styles.imageContainer }>                      
-                <ImageBackground                          
-                    source={{ 
-                        uri: item.url,
-                        cache: 'force-cache',
-                    }}  
-                    style={ styles.imageBackground } 
-                    imageStyle={ styles.innerImage }
-                    resizeMode={ 'contain' } 
-                    // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
-                >
-                    <View style={ styles.titleWrapper }>
-                        <Text style={ styles.title }>{ item.title }</Text>
-                    </View>
-                </ImageBackground>
-            </View>       
+        ({item}) => {
+            return (  
+              <View style={ styles.imageContainer }>                      
+                  <ImageBackground                          
+                      source={{ 
+                          uri: item.url,
+                          cache: 'force-cache',
+                      }}  
+                      style={ styles.imageBackground } 
+                      imageStyle={ styles.innerImage }
+                      resizeMode={ 'contain' } 
+                      // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
+                  >
+                      <View style={ styles.titleWrapper }>
+                          <Text style={ styles.title }>{ item.title }</Text>
+                      </View>
+                  </ImageBackground>
+              </View>
+            );  
         },
         [styles.imageBackground, styles.imageContainer, styles.innerImage, styles.title, styles.titleWrapper]
     );
