@@ -7,9 +7,12 @@ function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
     const [ shuffledPhotos, setShuffledPhotos ] = useState( undefined );
-    const {width} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
-    
-    // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
+
+    // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically    
+    const {width} = Dimensions.get('window'); 
+
+    // useMemo will save a memoized copy of the function for re-use, 
+    // instead of creating a new function each time    
     const photosService = useMemo(
         () => new PhotosService(), 
         []
@@ -131,7 +134,7 @@ function PhotosList( props ) {
                       imageStyle={ styles.innerImage }
                       resizeMode={ 'contain' }                       
                       // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
-                      // loadingIndicatorSource={{ uri: require('./assets/loading_icons8com_2.gif') }}
+                      // loadingIndicatorSource={{uri: require('./assets/loading_icons8com_2.gif')}}
                       // loadingIndicatorSource={ require('./assets/loading_icons8com_2.gif') }
                       /*
                       defaultSource={{ 
@@ -154,7 +157,7 @@ function PhotosList( props ) {
 
     return (
         <View style={ styles.viewLayout }>
-            { shuffledPhotos===undefined ?
+            { shuffledPhotos === undefined ?
                 <View>
                     <ActivityIndicator size="large" color="#0000ff" />
                 </View> :    

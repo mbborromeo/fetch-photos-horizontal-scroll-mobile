@@ -1,4 +1,16 @@
 {
+  "parser": "babel-eslint", // babel-preset-expo
+  "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "jest": true
+  },
+  "extends": [
+      "airbnb"
+      // "plugin:prettier/recommended",
+      // "prettier/react"
+  ],
   "parserOptions": {
       "ecmaVersion": 6,
       "sourceType": "module",
@@ -11,7 +23,7 @@
     "react-hooks",
     "react-native"    
   ],
-  "rules": {
+  "rules": { // 0 or "off" to disable a rule, 1 or "warn" to have as a warning only, 2 or "error" to turn on error
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,
     // "react-native/no-inline-styles": 2,
@@ -20,6 +32,13 @@
     "react-native/no-single-element-style-arrays": 2,
     "indent": ["error", 4],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "no-console": "warn",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-array-index-key": "warn",
+    "react/jsx-curly-spacing": "off",
+    "prefer-const": "warn",
+    "object-curly-spacing": "warn"
+    // "prettier/prettier": "error"
   }
 }
