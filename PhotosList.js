@@ -1,6 +1,7 @@
 import React, { useState , useEffect, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import PhotosService from './PhotosService';
+import * as Utils from './utils';
 
 function PhotosList( props ) {
     //State variables
@@ -99,25 +100,10 @@ function PhotosList( props ) {
         */
     });
     
-    // TO DO: put this in separate utils.js file
-    // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
-    const shuffle = (array) => {
-        console.log("START Fisher-Yates shuffle array...");
-        let newArray = [...array]; // array.slice()
-
-        for (let i = newArray.length - 1; i > 0; i--) {
-            //console.log("i", i);
-            let j = Math.floor(Math.random() * (i + 1));
-            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        console.log("END Fisher-Yates shuffle array.");
-        return newArray;
-    }
-
     const onPressHandler = useCallback(
         () => {
             console.log("onPressHandler");
-            const temp = shuffle( photos );
+            const temp = Utils.shuffle( photos );
             setShuffledPhotos( temp );        
         },
         [photos]
