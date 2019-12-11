@@ -1,11 +1,12 @@
-import React, { useState , useEffect, useMemo } from 'react'; //
+import React, { useState , useEffect, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import PhotosService from './PhotosService';
 
 function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
-    let {width, height} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
+    const [ shuffledPhotos, setShuffledPhotos ] = useState( undefined );
+    const {width} = Dimensions.get('window'); // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically
     
     // useMemo will save a memoized copy of the function for re-use, instead of creating a new function each time    
     const photosService = useMemo(
@@ -17,7 +18,10 @@ function PhotosList( props ) {
         () => {       
             photosService.getPhotos()
                 .then( response => response.json() )
-                .then( responseJson => setPhotos(responseJson) )
+                .then( responseJson => {
+                    setPhotos(responseJson);
+                    setShuffledPhotos(responseJson);
+                })
                 .catch( (error) => {
                     console.error(error);
                 });      
@@ -26,108 +30,147 @@ function PhotosList( props ) {
     );
 
     const styles = StyleSheet.create({
-      header: {
-        fontWeight: 'bold', 
-        height: 36, 
-        lineHeight: 36, 
-        textAlign: 'center', 
-        borderWidth: 1, 
-        borderColor: 'black',
-      },
+        header: {
+            fontWeight: 'bold', 
+            height: 36, 
+            lineHeight: 36, 
+            textAlign: 'center', 
+            borderWidth: 1, 
+            borderColor: 'black',
+        },
 
-      viewLayout: {
-        // flex: 1,
-        // flexDirection: 'row',
-        // justifyContent: 'center'
-      },
+        viewLayout: {
+            // flex: 1,
+            // flexDirection: 'row',
+            // justifyContent: 'center'
+        },
 
-      imageContainer: {
-        width: width, // 375, don't want to hardcode this
-        height: 'auto',
-        // height: 600, // 667
-        // borderColor: 'red',
-        // borderWidth: 1,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around', // main-axis
-        alignItems: 'center', // cross-axis
-      },
+        imageContainer: {
+            width: width, // 375, don't want to hardcode this
+            height: 'auto',
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-around', // main-axis
+            alignItems: 'center', // cross-axis
+        },
       
-      imageBackground: { // positioned absolute by default, so ignores border properties
-        width: '100%', 
-        height: 'auto', 
-        resizeMode: 'contain',
-        aspectRatio: 1,        
+        imageBackground: { // positioned absolute by default, so ignores border properties
+            width: '100%', 
+            height: 'auto', 
+            resizeMode: 'contain',
+            aspectRatio: 1, 
+            flex: 1,
+            justifyContent: 'center',
+            shadowColor: 'black',
+            shadowOffset: { width:0, height:3 },
+            shadowOpacity: 1,
+            shadowRadius: 2,        
+        },
 
-        flex: 1,
-        justifyContent: 'center',
-        //alignItems: 'center',
+        innerImage: { // needed to override border properties of imageBackground
+            borderRadius: 16, 
+            borderColor: 'black', 
+            borderWidth: 1,
+        },
 
-        // // https://medium.com/the-react-native-log/tips-for-react-native-images-or-saying-goodbye-to-trial-and-error-b2baaf0a1a4d
-        // alignSelf: 'stretch',
-        // width: undefined,
-        // height: undefined,
-        
-        shadowColor: 'black',
-        shadowOffset: { width:0, height:3 },
-        shadowOpacity: 1,
-        shadowRadius: 2,        
-      },
+        titleWrapper: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
 
-      innerImage: {
-        borderRadius: 16, 
-        borderColor: 'black', 
-        borderWidth: 1,
-      },
+        title: {
+            fontSize: 24,
+            color: 'black',
+            backgroundColor: 'white',
+            opacity: 0.7,
+            padding: 16,
+            borderColor: 'grey',
+            borderWidth: 1,
+            transform: [{ rotate: '-45deg' }],
+            textAlign: 'left',
+        },
 
-      titleWrapper: {
-        //borderColor: 'yellow',
-        //borderWidth: 1,
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-
-        //height: 70,
-      },
-
-      title: {
-        // width: 375,
-        fontSize: 24,
-        //textTransform: 'capitalize',
-        //lineHeight: 16,
-        // flex: 1,        
-
-        color: 'black',
-        backgroundColor: 'white',
-        opacity: 0.7,
-        padding: 16,
-        borderColor: 'grey',
-        borderWidth: 1,
-        //whiteSpace: 'nowrap',
-        //overflow: 'hidden',
-        //textOverflow: 'ellipsis',
-        // flex: 1,
-        // flexDirection: 'row',
-        // alignItems: 'center',
-        //position: 'relative',
-        //top: 0, //'50%'
-        transform: [{ rotate: '-45deg' }],
-        textAlign: 'left',
-        //textAlignVertical: 'center',
-      },
-
-      button: {
-        backgroundColor: '#000033',
-      }
-
+        /*
+        button: {
+          backgroundColor: '#000033',
+        }
+        */
     });
+    
+    // TO DO: put this in separate utils.js file
+    // Fisher-Yates shuffle algorithm from https://javascript.info/task/shuffle
+    const shuffle = (array) => {
+        console.log("START Fisher-Yates shuffle array...");
+        let newArray = [...array]; // array.slice()
+
+        for (let i = newArray.length - 1; i > 0; i--) {
+            //console.log("i", i);
+            let j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        console.log("END Fisher-Yates shuffle array.");
+        return newArray;
+    }
+
+    const onPressHandler = useCallback(
+        () => {
+            console.log("onPressHandler");
+            const temp = shuffle( photos );
+            setShuffledPhotos( temp );        
+        },
+        [photos]
+    );
+
+    const keyExtractorHandler = useCallback(
+        (item) => {
+            console.log("keyExtractorHandler"); //, item.id.toString() 
+            return item.id.toString();            
+        },
+        []
+    );
+    
+    const renderItemHandler = useCallback(
+        ({item}) => {
+            console.log("renderItemHandler");
+            return (  
+              <View style={ styles.imageContainer }>                      
+                  <ImageBackground  
+                      source={{ 
+                          uri: item.url,
+                          cache: 'force-cache',
+                      }}  
+                      style={ styles.imageBackground } 
+                      imageStyle={ styles.innerImage }
+                      resizeMode={ 'contain' }                       
+                      // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
+                      // loadingIndicatorSource={{ uri: require('./assets/loading_icons8com_2.gif') }}
+                      // loadingIndicatorSource={ require('./assets/loading_icons8com_2.gif') }
+                      /*
+                      defaultSource={{ 
+                          uri: require('./assets/loading_icons8com_2.gif'),
+                          width: 60,
+                          height: 60,
+                      }}
+                      */
+                      defaultSource={ require('./assets/loading_icons8com_16.gif') }
+                  >
+                      <View style={ styles.titleWrapper }>
+                          <Text style={ styles.title }>{ item.title }</Text>
+                      </View>
+                  </ImageBackground>
+              </View>
+            );  
+        },
+        [styles.imageBackground, styles.imageContainer, styles.innerImage, styles.title, styles.titleWrapper]
+    );
 
     return (
         <View style={ styles.viewLayout }>
-            { photos===undefined ?
+            { shuffledPhotos===undefined ?
                 <View>
-                    <ActivityIndicator size="large" color="#0000ff" />  
+                    <ActivityIndicator size="large" color="#0000ff" />
                 </View> :    
                 <View>
                     <Text style={ styles.header }>
@@ -135,36 +178,17 @@ function PhotosList( props ) {
                     </Text>               
 
                     <FlatList
-                      data={ photos }
-                      renderItem={ ({item}) => 
-                        <View style={ styles.imageContainer }>                      
-                          <ImageBackground                          
-                            source={{ 
-                              uri: item.url,
-                              cache: 'force-cache',
-                            }}  
-                            style={ styles.imageBackground } 
-                            imageStyle={ styles.innerImage }
-                            resizeMode={ 'contain' } 
-                            // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
-                          >
-                            <View style={ styles.titleWrapper }>
-                              <Text style={ styles.title }>{ item.title }</Text>
-                            </View>
-                          </ImageBackground>
-                        </View>
-                      }
-                      keyExtractor={ (item) => item.id.toString() }
-                      horizontal={ true }
-                      // pagingEnabled={ true }
-                      initialNumToRender={ 5 }
+                        data={ shuffledPhotos }
+                        renderItem={ renderItemHandler }
+                        keyExtractor={ keyExtractorHandler }
+                        horizontal={ true }
+                        // pagingEnabled={ true }
+                        initialNumToRender={ 5 }
                     />        
                     
                     <Button
                         title="Re-order photos"
-                        onPress={
-                          () => Alert.alert('Button pressed')
-                        }
+                        onPress={ onPressHandler }
                     />                   
                 </View>
             }
