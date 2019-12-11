@@ -130,7 +130,7 @@ function PhotosList( props ) {
         },
         []
     );
-
+    
     const renderItemHandler = useCallback(
         ({item}) => {
             console.log("renderItemHandler");
@@ -143,8 +143,18 @@ function PhotosList( props ) {
                       }}  
                       style={ styles.imageBackground } 
                       imageStyle={ styles.innerImage }
-                      resizeMode={ 'contain' } 
+                      resizeMode={ 'contain' }                       
                       // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
+                      // loadingIndicatorSource={{ uri: require('./assets/loading_icons8com_2.gif') }}
+                      // loadingIndicatorSource={ require('./assets/loading_icons8com_2.gif') }
+                      /*
+                      defaultSource={{ 
+                          uri: require('./assets/loading_icons8com_2.gif'),
+                          width: 60,
+                          height: 60,
+                      }}
+                      */
+                      defaultSource={ require('./assets/loading_icons8com_16.gif') }
                   >
                       <View style={ styles.titleWrapper }>
                           <Text style={ styles.title }>{ item.title }</Text>
@@ -160,7 +170,7 @@ function PhotosList( props ) {
         <View style={ styles.viewLayout }>
             { shuffledPhotos===undefined ?
                 <View>
-                    <ActivityIndicator size="large" color="#0000ff" />  
+                    <ActivityIndicator size="large" color="#0000ff" />
                 </View> :    
                 <View>
                     <Text style={ styles.header }>
