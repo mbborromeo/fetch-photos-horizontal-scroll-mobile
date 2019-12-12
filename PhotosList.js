@@ -111,4 +111,4 @@ function PhotosList( props ) {
     );
 }
 
-export default React.memo( PhotosList );
+export default PhotosList;
