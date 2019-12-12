@@ -1,5 +1,5 @@
 import React, { useState , useEffect, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator } from 'react-native';
 import PhotosService from './PhotosService';
 import Photo from './Photo';
 import * as Utils from './utils';
@@ -8,9 +8,6 @@ function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
     const [ shuffledPhotos, setShuffledPhotos ] = useState( undefined );
-
-    // https://cmichel.io/how-to-get-the-size-of-a-react-native-view-dynamically    
-    const {width} = Dimensions.get('window'); 
 
     // useMemo will save a memoized copy of the function for re-use, 
     // instead of creating a new function each time    
@@ -78,10 +75,10 @@ function PhotosList( props ) {
         ({item}) => {
             console.log("renderItemHandler");
             return ( 
-              <Photo item={ item } windowWidth={ width } />
+              <Photo item={ item } />
             );  
         },
-        [width]
+        []
     );
 
     return (
