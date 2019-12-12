@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native';
 
-function Photo( props ) {
+function Photo({ item }) {
     // console.log("Photo!!!!");
-    const {item} = props;
 
     // State variables
     const [ photoLoaded, setPhotoLoaded ] = useState( false );   
@@ -80,5 +79,6 @@ function Photo( props ) {
         </View>
     );  
 }
+
 
 export default Photo;
