@@ -1,7 +1,7 @@
-import React, { useState , useEffect, useMemo, useCallback } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native';
 
-function Photo( props ) {
+function Photo({ item }) {
     // console.log("Photo!!!!");
 
     // State variables
@@ -61,7 +61,7 @@ function Photo( props ) {
         <View style={ styles.imageContainer }>                      
             <ImageBackground  
                 source={{ 
-                    uri: props.item.url,
+                    uri: item.url,
                     cache: 'force-cache',
                 }}  
                 style={ styles.imageBackground } 
@@ -72,12 +72,13 @@ function Photo( props ) {
             >
                 { photoLoaded && 
                     <View style={ styles.titleWrapper }>
-                        <Text style={ styles.title }>{ props.item.title }</Text>
+                        <Text style={ styles.title }>{ item.title }</Text>
                     </View>
                 }
             </ImageBackground>
         </View>
     );  
 }
+
 
 export default Photo;
