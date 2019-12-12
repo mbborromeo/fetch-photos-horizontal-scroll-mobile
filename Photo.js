@@ -2,13 +2,12 @@ import React, { useState , useEffect, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native';
 
 function Photo( props ) {
-    console.log("Photo!!!!");
+    //console.log("Photo!!!!");
 
     // State
     const [ photoLoaded, setPhotoLoaded ] = useState( false );   
     const {width} = Dimensions.get('window'); // get initial window dimensions
 
-    // add Styles here...
     const styles = StyleSheet.create({
         imageContainer: {
             width: width, // dynamically gets window width, so app will work on all iOS phones
@@ -81,4 +80,4 @@ function Photo( props ) {
     );  
 }
 
-export default Photo;
+export default React.memo( Photo );
