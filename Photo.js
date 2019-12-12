@@ -4,6 +4,9 @@ import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 function Photo( props ) {
     console.log("Photo!!!!");
 
+    // State
+    const [ photoLoaded, setPhotoLoaded ] = useState( false );
+
     // add Styles here...
     const styles = StyleSheet.create({
         imageContainer: {
@@ -65,10 +68,13 @@ function Photo( props ) {
                 imageStyle={ styles.innerImage }
                 resizeMode={ 'contain' }
                 defaultSource={ require('./assets/loading_icons8com_16.gif') }
+                onLoadEnd={ () => setPhotoLoaded(true) }
             >
-                <View style={ styles.titleWrapper }>
-                    <Text style={ styles.title }>{ props.item.title }</Text>
-                </View>
+                { photoLoaded && 
+                    <View style={ styles.titleWrapper }>
+                        <Text style={ styles.title }>{ props.item.title }</Text>
+                    </View>
+                }
             </ImageBackground>
         </View>
     );  
