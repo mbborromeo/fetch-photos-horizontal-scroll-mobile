@@ -55,32 +55,32 @@ function Photo( props ) {
     });
 
     return (  
-      <View style={ styles.imageContainer }>                      
-          <ImageBackground  
-              source={{ 
-                  uri: props.item.url,
-                  cache: 'force-cache',
-              }}  
-              style={ styles.imageBackground } 
-              imageStyle={ styles.innerImage }
-              resizeMode={ 'contain' }                       
-              // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
-              // loadingIndicatorSource={{uri: require('./assets/loading_icons8com_2.gif')}}
-              // loadingIndicatorSource={ require('./assets/loading_icons8com_2.gif') }
-              /*
-              defaultSource={{ 
-                  uri: require('./assets/loading_icons8com_2.gif'),
-                  width: 60,
-                  height: 60,
-              }}
-              */
-              defaultSource={ require('./assets/loading_icons8com_16.gif') }
-          >
-              <View style={ styles.titleWrapper }>
-                  <Text style={ styles.title }>{ props.item.title }</Text>
-              </View>
-          </ImageBackground>
-      </View>
+        <View style={ styles.imageContainer }>                      
+            <ImageBackground  
+                source={{ 
+                    uri: props.item.url,
+                    cache: 'force-cache',
+                }}  
+                style={ styles.imageBackground } 
+                imageStyle={ styles.innerImage }
+                resizeMode={ 'contain' }                       
+                // loadingIndicatorSource={[ require('./assets/loading_icons8com_2.gif') ]}
+                // loadingIndicatorSource={{uri: require('./assets/loading_icons8com_2.gif')}}
+                // loadingIndicatorSource={ require('./assets/loading_icons8com_2.gif') }
+                /*
+                defaultSource={{ 
+                    uri: require('./assets/loading_icons8com_2.gif'),
+                    width: 60,
+                    height: 60,
+                }}
+                */
+                defaultSource={ require('./assets/loading_icons8com_16.gif') }
+            >
+                <View style={ styles.titleWrapper }>
+                    <Text style={ styles.title }>{ props.item.title }</Text>
+                </View>
+            </ImageBackground>
+        </View>
     );  
 }
 

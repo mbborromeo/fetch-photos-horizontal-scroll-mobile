@@ -81,7 +81,7 @@ function PhotosList( props ) {
               <Photo item={ item } windowWidth={ width } />
             );  
         },
-        [styles.imageBackground, styles.imageContainer, styles.innerImage, styles.title, styles.titleWrapper]
+        [width]
     );
 
     return (
