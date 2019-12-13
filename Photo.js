@@ -86,10 +86,14 @@ function Photo({ item }) {
     );  
 }
 
-/*
-DisplayNames.propTypes = {
-    item: PropTypes.array.isRequired,
+Photo.propTypes = {
+    item: PropTypes.shape({
+        //albumId: PropTypes.number.isRequired,
+        //id: PropTypes.number.isRequired,
+        title: PropTypes.string, // .isRequired   
+        url: PropTypes.string, // .isRequired    
+        //thumbnailUrl: PropTypes.string      
+    }).isRequired
 };
-*/
 
 export default React.memo( Photo );
