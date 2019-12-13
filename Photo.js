@@ -18,7 +18,7 @@ function Photo({ item }) {
 
     return (
         <View
-            style={{ // { styles.imageContainer }
+            style={{
                 width: width, // dynamically gets window width, so app will work on all iOS phones
                 height: 'auto',
                 flex: 1,

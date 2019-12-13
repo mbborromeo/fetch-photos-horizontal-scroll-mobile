@@ -1,9 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-// export default const styles = StyleSheet.create({
-// export default styles = StyleSheet.create({
 export default StyleSheet.create({
-    // App
+    // App.js
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -11,7 +9,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
 
-    // PhotosList
+    // PhotosList.js
     header: {
         fontWeight: 'bold',
         height: 36,
@@ -22,25 +20,14 @@ export default StyleSheet.create({
     },
 
     viewLayout: {
-    // flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'center'
+        // flex: 1,
+        // flexDirection: 'row',
+        // justifyContent: 'center'
     },
 
-    // Photo
-    /*
-    imageContainer: {
-        width: width, // dynamically gets window width, so app will work on all iOS phones
-        height: 'auto',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around', // main-axis
-        alignItems: 'center', // cross-axis
-    },
-    */
-
-    imageBackground: {
-    // positioned absolute by default, so ignores border properties
+    // Photo.js
+    imageBackground: { 
+        // positioned absolute by default, so ignores border properties
         width: '100%',
         height: 'auto',
         resizeMode: 'contain',
@@ -53,8 +40,8 @@ export default StyleSheet.create({
         shadowRadius: 2,
     },
 
-    innerImage: {
-    // needed to override border properties of imageBackground
+    innerImage: { 
+        // needed to override border properties of imageBackground
         borderRadius: 16,
         borderColor: 'black',
         borderWidth: 1,

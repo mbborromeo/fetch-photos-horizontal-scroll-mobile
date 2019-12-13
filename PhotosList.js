@@ -33,7 +33,6 @@ function PhotosList(props) {
 
     const onPressHandler = useCallback( 
         () => {
-            // console.log("onPressHandler");
             const temp = Utils.shuffle(photos);
             setShuffledPhotos(temp);
         },
@@ -42,7 +41,6 @@ function PhotosList(props) {
 
     const keyExtractorHandler = useCallback( 
         (item) => {
-            // console.log("keyExtractorHandler");
             return item.id.toString();
         },
         []
@@ -50,7 +48,6 @@ function PhotosList(props) {
 
     const renderItemHandler = useCallback(
         ({ item }) => {
-            // console.log("renderItemHandler");
             return <Photo item={item} />;
         },
         []
