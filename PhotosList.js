@@ -1,25 +1,9 @@
 import React, { useState , useEffect, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View, FlatList, Button, ActivityIndicator } from 'react-native';
+import { Text, View, FlatList, Button, ActivityIndicator } from 'react-native';
 import PhotosService from './PhotosService';
 import Photo from './Photo';
 import * as Utils from './utils';
-
-const styles = StyleSheet.create({
-  header: {
-      fontWeight: 'bold', 
-      height: 36, 
-      lineHeight: 36, 
-      textAlign: 'center', 
-      borderWidth: 1, 
-      borderColor: 'black',
-  },
-
-  viewLayout: {
-      // flex: 1,
-      // flexDirection: 'row',
-      // justifyContent: 'center'
-  }
-});
+import styles from './styles';
 
 function PhotosList( props ) {
     //State variables

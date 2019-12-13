@@ -1,57 +1,9 @@
 import React, { useState, useCallback  } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native';
+import { Text, View, ImageBackground, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
+import styles from './styles';
 
 const { width } = Dimensions.get('window'); // get initial window dimensions
-
-const styles = StyleSheet.create({
-    imageContainer: {
-        width: width, // dynamically gets window width, so app will work on all iOS phones
-        height: 'auto',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around', // main-axis
-        alignItems: 'center', // cross-axis
-    },
-
-    imageBackground: { // positioned absolute by default, so ignores border properties
-        width: '100%', 
-        height: 'auto', 
-        resizeMode: 'contain',
-        aspectRatio: 1, 
-        flex: 1,
-        justifyContent: 'center',
-        shadowColor: 'black',
-        shadowOffset: { width:0, height:3 },
-        shadowOpacity: 1,
-        shadowRadius: 2,        
-    },
-
-    innerImage: { // needed to override border properties of imageBackground
-        borderRadius: 16, 
-        borderColor: 'black', 
-        borderWidth: 1,
-    },
-
-    titleWrapper: {
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-
-    title: {
-        fontSize: 24,
-        color: 'black',
-        backgroundColor: 'white',
-        opacity: 0.7,
-        padding: 16,
-        borderColor: 'grey',
-        borderWidth: 1,
-        transform: [{ rotate: '-45deg' }],
-        textAlign: 'left',
-    },
-});
 
 function Photo({ item }) {
     // State variables
@@ -65,7 +17,15 @@ function Photo({ item }) {
     );
 
     return (  
-        <View style={ styles.imageContainer }>                      
+        <View style={{  // { styles.imageContainer }
+                width: width, // dynamically gets window width, so app will work on all iOS phones
+                height: 'auto',
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+            }}
+        > 
             <ImageBackground  
                 source={{ 
                     uri: item.url,
@@ -89,11 +49,8 @@ function Photo({ item }) {
 
 Photo.propTypes = {
     item: PropTypes.shape({
-        //albumId: PropTypes.number.isRequired,
-        //id: PropTypes.number.isRequired,
         title: PropTypes.string, // .isRequired   
         url: PropTypes.string, // .isRequired    
-        //thumbnailUrl: PropTypes.string      
     }).isRequired
 };
 
