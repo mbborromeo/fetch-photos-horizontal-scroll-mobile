@@ -24,7 +24,7 @@ function PhotosList(props) {
                     setPhotos(responseJson);
                     setShuffledPhotos(responseJson);
                 })
-                .catch(error => {
+                .catch( (error) => {
                     console.error(error);
                 });
         }, 
@@ -50,7 +50,7 @@ function PhotosList(props) {
 
     const renderItemHandler = useCallback(
         ({ item }) => {
-        // console.log("renderItemHandler");
+            // console.log("renderItemHandler");
             return <Photo item={item} />;
         },
         []
