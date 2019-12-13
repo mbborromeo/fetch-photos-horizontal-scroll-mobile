@@ -17,10 +17,13 @@ function Photo({ item }) {
     );
 
     const imageSource = useMemo(
-        {
-            uri: item.url,
-            cache: 'force-cache',
-        }
+        () => {
+            return {
+                uri: item.url,
+                cache: 'force-cache',
+            }
+        },
+        [item]
     );
 
     return (
