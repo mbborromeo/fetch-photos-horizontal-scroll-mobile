@@ -4,6 +4,23 @@ import PhotosService from './PhotosService';
 import Photo from './Photo';
 import * as Utils from './utils';
 
+const styles = StyleSheet.create({
+  header: {
+      fontWeight: 'bold', 
+      height: 36, 
+      lineHeight: 36, 
+      textAlign: 'center', 
+      borderWidth: 1, 
+      borderColor: 'black',
+  },
+
+  viewLayout: {
+      // flex: 1,
+      // flexDirection: 'row',
+      // justifyContent: 'center'
+  }
+});
+
 function PhotosList( props ) {
     //State variables
     const [ photos, setPhotos ] = useState( undefined );
@@ -29,29 +46,6 @@ function PhotosList( props ) {
         },
         [photosService]
     );
-
-    const styles = StyleSheet.create({
-        header: {
-            fontWeight: 'bold', 
-            height: 36, 
-            lineHeight: 36, 
-            textAlign: 'center', 
-            borderWidth: 1, 
-            borderColor: 'black',
-        },
-
-        viewLayout: {
-            // flex: 1,
-            // flexDirection: 'row',
-            // justifyContent: 'center'
-        },
-
-        /*
-        button: {
-          backgroundColor: '#000033',
-        }
-        */
-    });
     
     const onPressHandler = useCallback(
         () => {
