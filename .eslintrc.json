@@ -42,15 +42,14 @@
     "react/jsx-curly-spacing": "off",
     "prefer-const": "warn",
     "object-curly-spacing": "warn",
-    "prettier/prettier": "error",
-    /* [
+    "prettier/prettier": [
       "error",
       {
         "trailingComma": "es5",
         "singleQuote": true,
         "printWidth": 100
       }
-    ]*/
+    ], // "error"
     "import/no-unresolved": "off"
   }
 }

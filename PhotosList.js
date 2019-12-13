@@ -1,5 +1,5 @@
 import React, { useState , useEffect, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View, ImageBackground, FlatList, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, FlatList, Button, ActivityIndicator } from 'react-native';
 import PhotosService from './PhotosService';
 import Photo from './Photo';
 import * as Utils from './utils';
@@ -9,8 +9,7 @@ function PhotosList( props ) {
     const [ photos, setPhotos ] = useState( undefined );
     const [ shuffledPhotos, setShuffledPhotos ] = useState( undefined );
 
-    // useMemo will save a memoized copy of the function for re-use, 
-    // instead of creating a new function each time    
+    // save a memoized copy of the function for re-use instead of creating a new function each time    
     const photosService = useMemo(
         () => new PhotosService(), 
         []
@@ -56,7 +55,7 @@ function PhotosList( props ) {
     
     const onPressHandler = useCallback(
         () => {
-            //console.log("onPressHandler");
+            // console.log("onPressHandler");
             const temp = Utils.shuffle( photos );
             setShuffledPhotos( temp );        
         },
@@ -65,7 +64,7 @@ function PhotosList( props ) {
 
     const keyExtractorHandler = useCallback(
         (item) => {
-            //console.log("keyExtractorHandler");
+            // console.log("keyExtractorHandler");
             return item.id.toString();            
         },
         []
@@ -73,7 +72,7 @@ function PhotosList( props ) {
     
     const renderItemHandler = useCallback(
         ({item}) => {
-            //console.log("renderItemHandler");
+            // console.log("renderItemHandler");
             return ( 
               <Photo item={ item } />
             );  
