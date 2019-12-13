@@ -1,4 +1,4 @@
-import React, { useState , useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native';
 
 function Photo( props ) {
@@ -57,6 +57,13 @@ function Photo( props ) {
         },
     });
 
+    const onLoadEndHandler = useCallback(
+        () => {            
+            setPhotoLoaded(true);  
+        },
+        []
+    );
+
     return (  
         <View style={ styles.imageContainer }>                      
             <ImageBackground  
@@ -68,7 +75,7 @@ function Photo( props ) {
                 imageStyle={ styles.innerImage }
                 resizeMode={ 'contain' }
                 defaultSource={ require('./assets/loading_icons8com_16.gif') }
-                onLoadEnd={ () => setPhotoLoaded(true) }
+                onLoadEnd={ onLoadEndHandler }
             >
                 { photoLoaded && 
                     <View style={ styles.titleWrapper }>
