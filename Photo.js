@@ -1,12 +1,11 @@
 import React, { useState, useCallback  } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Dimensions } from 'react-native';
+import PropTypes from 'prop-types';
 
 function Photo({ item }) {
-    // console.log("Photo!!!!");
-
     // State variables
     const [ photoLoaded, setPhotoLoaded ] = useState( false );   
-    const {width} = Dimensions.get('window'); // get initial window dimensions
+    const { width } = Dimensions.get('window'); // get initial window dimensions
 
     const styles = StyleSheet.create({
         imageContainer: {
@@ -86,5 +85,15 @@ function Photo({ item }) {
         </View>
     );  
 }
+
+Photo.propTypes = {
+    item: PropTypes.shape({
+        //albumId: PropTypes.number.isRequired,
+        //id: PropTypes.number.isRequired,
+        title: PropTypes.string, // .isRequired   
+        url: PropTypes.string, // .isRequired    
+        //thumbnailUrl: PropTypes.string      
+    }).isRequired
+};
 
 export default React.memo( Photo );

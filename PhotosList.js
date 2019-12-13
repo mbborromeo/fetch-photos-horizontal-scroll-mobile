@@ -1,5 +1,5 @@
 import React, { useState , useEffect, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View, ImageBackground, FlatList, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button, ActivityIndicator } from 'react-native';
 import PhotosService from './PhotosService';
 import Photo from './Photo';
 import * as Utils from './utils';
