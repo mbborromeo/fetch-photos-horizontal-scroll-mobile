@@ -18,8 +18,7 @@ function PhotosList(props) {
 
     useEffect( 
         () => {
-            photosService
-                .getPhotos()
+            photosService.getPhotos()
                 .then(response => response.json())
                 .then(responseJson => {
                     setPhotos(responseJson);
