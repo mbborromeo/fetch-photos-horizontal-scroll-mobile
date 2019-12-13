@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Text, View, ImageBackground, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
@@ -16,6 +16,13 @@ function Photo({ item }) {
         []
     );
 
+    const imageSource = useMemo(
+        {
+            uri: item.url,
+            cache: 'force-cache',
+        }
+    );
+
     return (
         <View
             style={{ // { styles.imageContainer }
@@ -28,10 +35,7 @@ function Photo({ item }) {
             }}
         >
             <ImageBackground
-                source={{
-                    uri: item.url,
-                    cache: 'force-cache',
-                }}
+                source={ imageSource }
                 style={styles.imageBackground}
                 imageStyle={styles.innerImage}
                 resizeMode="contain"
